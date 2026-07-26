@@ -1,0 +1,18 @@
+JAVASCRIPT BASICS
+Create a new folder
+open it in vcs and start a new terminal
+in the terminal type:
+npm init
+This will create a package.json file. When asked, hit enter for all default values.
+The file is missing 2 additional sections:
+"dependencies": {},
+and 
+"devDependencies": {}
+They should contain libraries needed to run our application.
+
+--------------
+To run JS code, we need to switch, in the console, to the file we wnat to run.
+We start in root, so we need to go to the folder with the file:
+cd folderName
+And run the file:
+node fileName.js
