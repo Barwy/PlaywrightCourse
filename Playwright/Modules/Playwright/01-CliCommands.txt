@@ -1,0 +1,41 @@
+In playwright.config.ts file there is a projects section where we can set which browsers should be executing which tests.
+Name: is project name and can be anything
+use: states which browsers will be used for the test.
+
+Running 6 tests using 6 workers
+tests is the number of tests multiplied by browseres that are to be used.
+Workers is the number of cpu cores divided by 2.
+This is also configured in the configuration - workers: setting.
+The default is undefined, but it can be changed to any number.
+
+parallel: true means that each test within a spec file can be executed in parallel as it is running.
+When false it will run all tests one by one on each browser depending on the workers setting.
+
+Playwright console commands:
+* To run all tests in all files:
+npx playwright test
+
+* To run the tests in headed mode (with browsers visible):
+npx playwright test --headed
+
+* To run test from a specific project:
+npx playwright test --project=chromium --headed
+
+* If a prject has multiple spec files, we can run a partibular one:
+npx playwright test spec fileName.spec.ts --project=chromium --headed
+
+* To run a particular test:
+npx playwright test -g "Test Name" --prject=chromium --headed
+
+* To open the report of the latest execution:
+npx playwright show-report
+
+Annotations that can be used in the spec files
+Normally tests look like this:
+test('Test Name', async ({ page }) =>{Test body});
+
+* To run only the specific tests in a file: 
+test.only('Test Name', async ({ page }) =>{Test body});
+
+* To skip a test during all executions:
+test.skip('Test Name', async ({ page }) =>{Test body});

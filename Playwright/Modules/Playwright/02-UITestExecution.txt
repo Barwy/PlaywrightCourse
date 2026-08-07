@@ -1,0 +1,18 @@
+Test can be laundhed:
+- from .spec file by pressing green play button/check mark.
+- from Testing tab by pressing the black play button next to a test name.
+
+If tests are there but we cannot launch them, we can press the refresh button next to test explorer in Testing tab.
+
+There are also tools available in the testing tab, at the bottom where various settings can be adjusted.
+"Projects" available there are not browsers but are projects as defined in the playwright.config.ts file.
+Settings that are avaialbe there:
+- show browser -> toggles headless mode.
+
+Playwright has the so-called ui runner that can be enabled with the following cmmand:
+npx playwright test --ui  
+It lets us run specific test or all tests included in a spec file.
+
+Show trace viewer opens the ui view once the test is complete.
+
+UI mode is best for debugging and running tests from the visual studio is best for just running tests.
