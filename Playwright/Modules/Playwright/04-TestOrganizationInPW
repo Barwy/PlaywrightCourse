@@ -1,0 +1,44 @@
+Each spec file that contains tests must start with import of the test function from PW:
+import {test} from '@playwright/test'
+
+Each test function requires certain arguments:
+test('My Frist Test', () => {
+
+})
+
+Single test can be orgainzed in test suits:
+test.describe('Test suite A', () => {
+    test('My Frist Test', () => {
+        Test Body
+})
+
+    test('My Second Test', () => {
+        Test Body
+})
+
+    test('My Third Test', () => {
+        Test Body
+})
+})
+
+page is a fuxture (there are 4 in total) and it represents a blank page in a browser that will be used for test.
+We can call it and use some of many methods on it.
+Throught the page fixture we call different PW methods that let us execute tests.
+
+test('My Frist Test', async ({page}) => {
+        await page.goto('https://playground.bondaracademy.com/pages/iot-dashboard');
+        await page.getByText('Forms').click();
+        await page.getByText('Page Layouts').click();
+})
+
+Type of the goto method is promise. In typescript this type can have 2 outcomes:
+resolved - excecuted successfully
+rejected - there was attempt to resolve it within certain amount of time (timeout), but it was unseccessful.
+Whenever a method/function is of promise type, it must be preceeded by await keyword.
+
+async is the type of the callback function.
+
+page.locator() is an example of a function that is not a promise and await will have no effect on it (a hint will say so if we add it).
+
+getByText() and click() are chained together and will be excecuted one after another. The first one is of type Locator and does not
+require an await, but click() and so it must be added.

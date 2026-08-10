@@ -1,0 +1,16 @@
+Trace stack can be included in the report:
+npx playwright test  --project=chromium --trace on
+
+In the playwright.confit.ts in use: section there is trace: subsection
+By default trace is added to the first rerun of a test that previously failed.
+
+To run a test with debug enabled, we use the following command:
+npx playwritght test --project=chromium --debug
+If we do that, inspector window will open along with the browser.
+In the inspector we can let the test run as usual, or make it go step by step.
+Log is saved for each step that is executed.
+
+Another option is using the debugging tool built into visual studio code.
+Open the spec file with the test you want to debug and go to the testing tab.
+Put breakpoints wherer you want the test to pause and run the test with the Debug Test button.
+A little panel with test runnig options will appear at the top. Also, in the browser selectors will appear.
