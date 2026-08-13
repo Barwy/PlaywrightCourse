@@ -1,0 +1,17 @@
+Code for this lesson is in the testOne.spec.ts file
+
+Hooks let us save time setting up the environment before each test:
+test.beforeEach(async({page}) => {
+    code that is to be performed before each test.
+    })
+
+Another useful hook is 
+test.beforeAll()
+It performs code just once before any other test in the spec file is executed.
+
+their opposites are:
+test.afterEach()
+test.afterAll()
+
+It is good practice to user afterAll rather than afterEach, as if the latter causes any probles, all subsequent
+tests will fail.

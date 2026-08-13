@@ -4,7 +4,7 @@ Test can be laundhed:
 
 If tests are there but we cannot launch them, we can press the refresh button next to test explorer in Testing tab.
 
-There are also tools available in the testing tab, at the bottom where various settings can be adjusted.
+There are also tools available in the testing tab, at the bottom where various settings can be adjusted - find PLAYWRIGHT at the bottom to the left.
 "Projects" available there are not browsers but are projects as defined in the playwright.config.ts file.
 Settings that are avaialbe there:
 - show browser -> toggles headless mode.
