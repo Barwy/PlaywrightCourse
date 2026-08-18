@@ -1,0 +1,17 @@
+Thee are two types of assertions. To see what type we are using, we need to hover over the method we use to assert a value,
+we will be sown its signature. Generis assertions use GenericAssertions.
+They are simple. They compare their right side to the left:
+
+let number = 3;
+expect(value).toEqual(3);
+
+There is a variety of methods to choose from.
+
+We can also perform assertions on locators. Good thing about them is that they wait 5s for text to appear. 
+They have LocatorAssertions in their descriptions when hovered over:
+const elementLocator = page.locator('locator);
+await expect(elementLocator).toHaveText('Text');
+
+Finally, there are alos soft asseertins that let the test continue if it fails:
+const elementLocator = page.locator('locator);
+await expect.soft(elementLocator).toHaveText('Text');

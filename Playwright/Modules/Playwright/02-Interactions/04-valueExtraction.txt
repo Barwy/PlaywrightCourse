@@ -1,0 +1,17 @@
+There are various elements containig text on a page and we may need it for purposes of our test.
+
+textContent() lets us get text visible on a page and is not a placeholer.
+const elementLocator = page.locator('locator', {hasText: 'Text we look for'});
+const elementText = await elementLocator.getByRole('button').textContent(); //we use await here because textContent() is a promise.
+
+allTextContents() lets us extract all text found in elements matching our selector as an array:
+const textOfElements = await page.locator('locator').allTextContents();
+
+Getting input field value
+const textField = page.locator('locator');
+await textField.fill('text to pass');
+const textFieldValue = await textField.inputValue();
+
+getting attribute value
+const textField = page.locator('locator');
+const attributeLocator = await textField.getAttribute('attributeName');

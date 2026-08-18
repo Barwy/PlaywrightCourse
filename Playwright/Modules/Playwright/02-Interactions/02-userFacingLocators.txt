@@ -1,0 +1,26 @@
+Playwright encourages testers to test from end-user perspective. For this it includes user-visible selectors.
+It is best to start by locating elements with getBy methods and then move on to the traditional ones if these are insufficient.
+
+
+getByRole - role is how tools assisting users of the page view its elements.
+We provide the 'type' of the element (button) and then its description (name: sign in).
+page.getByRole('button', {name: 'Sign in'});
+
+Here we fill the first occurence of a textbox that is described as email.
+page.getByRole('textBox', {name: 'Email'}).first().click().fill('dummy@email.com');
+
+Label is a text visible to user, placed next to other items on the page. It finds the tag label and points to 
+interactable element close to it.
+page.getByLabel('Password');
+
+Placehoder is text we see inside an input field. Again it points to an attribute 'placeholder' with given text as a value.
+page.getByPlaceholder('Password');
+
+This finds us elements as they are displayed on the page and are text (i.e. inside >< withing html code).
+page.getByText('Submit').click();
+
+This finds attributes that have testId in their name and given value:
+page getByTestId('Email');
+
+This finds attributes that have title as their name and given value. Usually they are located in page menus:
+page.getByTitle('Title of element');

@@ -31,3 +31,11 @@ test.describe('suite Auth', () => {
         await page.getByText('Register').click();
     })
 })
+
+test('User visible-locators', async ({ page }) => {
+    await page.getByRole('button', {name: 'Sign in'});
+    await page.getByRole('textbox', {name: 'Email'}).first().fill('dummy@email.com');
+    await page.getByLabel('Password').first().fill('supersecret');
+    await page.getByPlaceholder('Jane Doe').fill('Joe Deer');
+    await page.getByText('Submit').click();
+})

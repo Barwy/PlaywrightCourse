@@ -1,0 +1,45 @@
+PW's timeouts have three layers:
+First is the global timeout - it says hou much time all tests have to be ran and by default it is not set to any value.
+Secont is single test timeout - it says how much time one test has to be executed. By default a test should not be longer than 30 seconds.
+Finally, there are 3 other timeouts that all work on the same level:
+Action timeout - is the time PW can take to perform an action (test timeout time, unless configured in any other way).
+Navigation tiemout - how long pages take to open (it has no default timeout and can be configured independently of others).
+Expect timeout - timeout for locator assertions (by default it is 5s).
+
+Lower tier timeouts cannot be longer than those on the higher level. It will fail anyway if the upper layer's time runs out.
+
+All this can be set on the framework level in the playwright.config.ts file -> defineConfig section.
+To change test timeout time we add timeout: property at the top followed by time amount in milliseconds:
+timeout: 5000,
+To change the global timeout we use globalTimeout: again, followed by time amount in milliseconds. It must be higher than or equal to the test timeout:
+globalTimeout: 50000,
+
+To adjust the expectTimeout, we need to add an expect block inside the defineConfig:
+expect: {
+    timeout: 4000
+},
+
+Action timeout is configured in the use: block that should already be present in the file.
+use: {
+    actionTimeout: 3000,
+}
+
+We should adjust timeouts to out tests, but not keep them too long so as no to waste time.
+
+Tiemouts can also be overridden on the test level for single actions:
+await page.element.click({timeout: 5000});
+
+Same thing can be done to assertions:
+await expect(element).toHaveText('expectedText', {timeout: 5000});
+
+To change timeout for a test, we write in the first line of the test:
+test.setTimeout(15000);
+
+We can also increase test time 3 times by adding at the beginning of a test:
+test.slow();
+
+To change the default timeout for a single .spec file, we modify the test.beforeEach.
+To make it work, we have to have the timeout present and configured in the configfile.
+test.beforeEach(async, ({ page }), testInfo) => {
+    testInfo.setTimeout(testInfo.timeout + 4000);
+}

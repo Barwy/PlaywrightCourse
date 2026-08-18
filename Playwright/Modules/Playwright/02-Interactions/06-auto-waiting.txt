@@ -1,0 +1,20 @@
+In JS promises wait for a condition in code to happen (be resolved withing timeout(30s by default)) or not (be rejected).
+Action is resolved after certain criteria are met, as described in documentation of PW. For click they are that the element must be
+visible, stable, enabled and must be receiveing events.
+Test flakiness is when test script works faster than the application it is operating on. Auto-waiting aims to remedy that.
+
+Not all methods have auto-wait built into them. In such situation we add extra wait.
+const buttonElement = page.locator('locator');
+await buttonElement.waitFor()
+
+Another way is using the method that waits for a locator - BEST option!!:
+await page.waitForSelector('selector');
+
+Wait for API response. We provide either the full response or a part of it. Here we wait for a part of it:
+await page.waitForResponse('**/delay/*');
+
+Wait for load state (not recommended) - waits for all network calls to stop:
+await page.waitForLoadState('networkIdle')
+
+Explicit wait - it should never be used, only as a last resort!!
+await page.waitForTimeout(3500);

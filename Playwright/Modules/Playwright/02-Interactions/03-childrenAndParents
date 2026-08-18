@@ -1,0 +1,33 @@
+Sometimes we need to find a child element on the page. We can do this by creating a chain of locators:
+page.locator('node-selector).locator('child1-selector').locator('child2-locator').click();
+
+The alternative is putting everything into a single locator method and separate locators with spaces.
+Without a space, Playwright will look for them on a single node:
+page.locator('node-selector child1-selector child2-locator').click();
+
+Regular locators and getBy's can be combined in a single statement:
+page.locator('locator').getByRole('role', {name: 'nameText'}).click();
+
+If there are multiple identical elements on a single node and we want a particular one, we can use .nth(n).
+This is not recommended but sometimes unavoidable:
+page.selector('selector').nth(3).click();
+
+PARENTS
+Here we fid a parent element and starting from it we find an element in its sibling:
+page.locator('locator', {hasText: 'Text'}).getByRole('role').click();
+
+Another way is to find a suitable parent and point to its child.
+page.locator('locator', {has: page.locator('locator')});
+
+filter() has a similar behavior and should be used when we need a number of filters to narrow down the number
+of elements. It finds all locators that meet the filter criteria:
+page.locator('locator').filter({hasText: 'text'}).getByRole('button').click();
+
+We can use multiple filters at the same time. If we use multiple methods, we can put them into separate lines for better readability:
+page.locator('locator')
+    .filter({hasText: 'text'})
+    .filter(has: page.locator('locator'))
+    .getByRole('button').click();
+
+To go up, to parent node, we use xpath expression ..
+page.locator('locator').locator('..').click();
