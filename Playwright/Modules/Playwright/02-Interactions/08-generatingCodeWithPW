@@ -1,0 +1,19 @@
+Testing tab -> Playwright -> Tools ribbon at the bottom
+This contains tools to create code automatically.
+
+When we have ran a test and still have a page open, we can click "Pick Locator" and hover over elements of a page
+This will allow us to see locators of specific elements.
+When we click one of the elements we want to locate, the selector will appear near the console in VSC.
+
+We can also generate a whole test. To do this all we have to do is we click:
+Record New
+A new spec file will appear and a new browser window will appear. All steps we perform will be recorded
+Like accessing a specific url, clicking buttons and inserting text.
+Afterwards we have to review the code - locators and steps taken.
+
+The third option is:
+Record at cursor
+When we have part of a test already written and want to continue working on it, we run it to have the browser open.
+When it fininshes running, we go back to our test and plance the cursor where we want the rest of the test.
+Then we press record at cursor. We are taken back to the browser and can continue with our steps that will be recorded for us.
+Again, we have to modify the test we have to make it cleaner.
