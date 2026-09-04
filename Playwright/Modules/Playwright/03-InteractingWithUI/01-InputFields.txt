@@ -1,0 +1,23 @@
+Filling an input field:
+await page.locator(locator).fill('text to fill with');
+This method click the input field before typing any text, so there is no need to use .click() first.
+This method removes text before typing new text, so there is no need to use .clear() first.
+
+Rmoveing text from a field:
+await page.locator('locator').clear();
+
+We can also emulate keystrokes with this method:
+await page.locator('locator').pressSequentially('text to type');
+
+We can also add to it delay between the keystrokes (in milliseconds):
+await page.locator('locator').pressSequentially('text to type', {delay: 400});
+
+We can get text that is visible inside text field, that is not a text as such:
+const inputPlaceholder = await page.locator('locator').inputValue();
+
+This is how assertions for input fields should be written (prioritize locator assertions, not regular assertions).
+This will result in exact match:
+await expect(page.locator('locator')).toHaveValue('text to type');
+
+To check if part of text is present we have to use a regular expression (regex):
+await expect(page.locator('locator')).toHaveValue(/to type/);

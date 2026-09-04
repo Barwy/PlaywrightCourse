@@ -1,0 +1,39 @@
+DD = dropdown.
+Html uses 2 different types of DDs. They use different styles and require different approaches.
+One with tag 'select' is the classic one.
+For the other one available options are not visible until it has been clicked.
+
+1. For standard we do the following, we do not use .click():
+await page.getByRole('combobox').selectOption('option A');
+
+We can narrow down where on the page the DD is located:
+await page.locator('locator', {hasText: 'Choose option:'}).getByRole('combobox').selectOption('option A');
+
+We use the following assertion for this type of DD:
+await expect(page.getByRole('combobox')).toHaveValue('option A');
+
+2. For custom DDs, we have to imitate all actions we would normally take - cick everything:
+Expand the DD:
+await page.locator('locator', {hasText: 'Choose option:'}).locator('DD locator').click();
+Select option:
+If parent of the option is ul, and each single entry has an li (list item) tag, we can use it to create our locator:
+await page.getByRole('listItem').getByText('Option A').click();
+
+If it is just ul, we need to select from all of its children:
+await page.getByRole('list').getByText('Option A').click();
+
+Another option for custom DDs is directly targetting the list:
+await page.locator('custom-option-locator', {hasText: 'Option A'}).click();
+
+We create an assertion in the following way:
+await expect(page.locator('DD section locator', {hasText: 'Select option'})).locator('custom-option-locator').toHaveText('Option A');
+
+Getting the entire list into an array:
+const ddFieldPosition = page.locator('DD section locator', {hasText: 'Select option'}).locator('custom-option-locator');
+await ddFieldPosition.click();
+const allDdOptions = await page.locator('custom-option-locator').allTextContents(); //we create an array of all options' text.
+for(const listValue of allDdOptions) {
+    await page.locator('custom-option-locator', {hasText: listValue}).click();
+    await expect(ddFieldPosition).locator('custom-option-locator').toHaveText(listValue);
+    await ddFieldPosition.click();
+}

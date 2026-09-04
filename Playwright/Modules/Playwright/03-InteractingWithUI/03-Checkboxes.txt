@@ -1,0 +1,15 @@
+There are two ways to deal with checkboxes:
+1. .click() - clicks the checkbox.
+2. .check() - ensures the checkbox is left in checked state (nothing happens if it is already checked).
+
+The opposite of .check() is .uncheck();
+
+await page.getByRole('checkbox', {name: 'Hide on click'}).click({force: true});
+await page.getByRole('checkbox', {name: 'Hide on click'}).check({force: true});
+
+(un)Checking all boxes on a page:
+const allCheckboxes = page.getByRole('checkbox');
+for(const box of await allCheckboxes.all()){
+    await box.uncheck({force: true});
+    await expect(box).not.toBeChecked();
+}

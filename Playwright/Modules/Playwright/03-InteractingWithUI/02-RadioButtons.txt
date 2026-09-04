@@ -1,0 +1,20 @@
+Input tag in radio buttons is the one that accepts clicks.
+Usually we will have to locate input element with type='radio'
+There are 2 ways to hadle this:
+
+await page.locator('locator').getByLabel('button one').check();
+
+This may not work, so we have to use:
+
+await page.locator('locator').getByLabel('button one').check({force: true});
+
+force: true should be used carefully, as in this case it disables auto-wait of PW.
+We also skip checking all await conditions that, in this case, cause the test to fail.
+We can use either check(), or click().
+
+Another, RECOMMENDED, option is using getByRole:
+await page.locator('locator').getByRole('radio', {name: 'Option 2'}).check({force: true});
+
+Radio buttons are validated this way:
+await expect(radioButtonLocator1).toBeChecked(); //validate option is checked
+await expect(radioButtonLocator2).not.toBeChecked(); //validate option is not checked
