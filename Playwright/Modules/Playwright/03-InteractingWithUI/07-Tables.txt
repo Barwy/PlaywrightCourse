@@ -1,0 +1,50 @@
+In HTML tables use the following tags:
+<table> - starts each table;
+<theade> - table header, it is optional;
+<tbody> - body of a table, it encompases the whole table except for the header;
+<tr> - table row;
+<th> - table column inside table column;
+<td> - table column in a table body;
+
+To select a row by a visible text (most convenient way):
+const tbRowByEmail = page.getByRole('row', {name: 'email@address.com});
+await tbRowByEmail.locator('.row-edit').click;
+
+Editing a row in a table (where possible, we clicked edit above):
+Getting the last column in a row (we use whatever locator is available):
+await tbRowByEmail.getByPlaceholder('Age').fill('35');
+The assertion to use is:
+await.expect(tbRowByEmail.locator('td').last()).toHaveText('35');
+
+Sometimes we do not have a specific text we could use to find the element in a table and have to use column value:
+We find all row elements and fileter by role cell that has index 1 (counted from 0):
+const tableRowTwo = page.getByRole('row').filter({has: page.getByRole('cell').nth(1)}).getByText('10');
+
+Once we start editing a row it is no longer part of the table, so we need to create a new locator:
+await tableRowEditEmail = page.locator('tbody').getByPlaceholder('E-mail').fill('test@email');
+Finally we save (ommitted here), and validate the contents of the row we changed:
+await expect(tableRowEditEmail.locator('td').nth(5)).toHaveText('test@email');
+
+When working with tables it is best to find the row first and then work with any cell within.
+We can reach particular columns in a row using:
+.first()
+.last()
+.nth(4)
+We can also filter out the column.
+
+Getting list of values from a column:
+In PW we cannot get one locator for an entire column. We need to go throug a column in each row.
+We need to ensure the column is in the right state before we do that. Assertion will help us with that.
+const ages = ["20", "30", "40"]; //Array of ages we will be checking.
+for (let age of ages) {
+    await page.getByPlaceholder('Age').fill(age); //on every turn of the loop a new age will be provided.
+    if (age == '200') {
+        await expect(paage.locator('tbody')).toContainText('Nothing was found');
+    } else {
+        await expect(page.locator('tbody tr').first().locator('td').last()).toHaveText('20');
+        const allTableRows = page.locator('tbody tr').all(); //this is a css locator syntax where tbody is an ancestor of tr.
+        for(let row of allTableRows){
+            await expect(row.locator('td').last()).toHaveText(age);
+        }
+    }
+}

@@ -1,0 +1,10 @@
+2 types of dialogue boxes:
+- 'regular ones' where we click and box appears that can be investigated with devtools.
+- ones that are built into the browser.
+The second type is automatically dismissed by Playwright. To validate the message and click OK:
+page.on('dialog', dialog => {
+    expect(dialog.message()).toEqual('Message text');
+    dialog.accept();
+})
+
+page.on must be declared before the event in which it appears, ot it won't work.

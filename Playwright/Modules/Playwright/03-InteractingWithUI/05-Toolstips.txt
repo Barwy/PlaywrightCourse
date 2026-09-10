@@ -1,0 +1,7 @@
+Tooltip is text that appears when hovering over a button. 
+The problem with it is that it disappears when we move the mouse away, so it cannot be inspected.
+To inspect it, we need to freeze the DOM:
+Open browser console -> Sources (tab) -> hover over the tooltip -> press f8 (windows) -> Elements (tab)
+
+await page.getByRole('button', {name: 'buttonName'}).hover(); //We hover over the button to make the tooltip appear.
+await expect(page.getByRole('tooltip')).toHaveText('tooltip text');
