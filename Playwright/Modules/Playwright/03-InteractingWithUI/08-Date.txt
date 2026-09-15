@@ -1,0 +1,37 @@
+Normally we provide date by filling a text field.
+Sometimes pages have a different layout.
+Once we click the calendar text field and calendar opens, we have to exclude the past month.
+Its elements have bounding month in the name of their elements.
+We can exclude cells that do not contain class='bounding-mont'.
+
+await page.locator('.day-cell:not(.bounding-month)').getByText('13').click();
+If we want eact match of text, we use the {exact: true}
+await page.locator('.day-cell:not(.bounding-month)').getByText('3', {exact: true}).click();
+
+Assertion would be:
+await expect('calendarTextFieldSelector').toHaveValue('Sep 3, 2026');
+
+If we want to set the date dynamically, rather than have it hardcoded, we use date object in JS.
+This is not a perfect solution as it will not work with dates far into the future:
+
+const date = new Date();
+date.setDate(date.getDate() +6);
+const expectedDay = date.getDate().toString();
+await page.locator('.day-cell:not(.bounding-month)').getByText(expectedDay, {exact: true}).click();
+
+Now we need to create a dynamic date for the assertion:
+const expectedMonth = date.toLocaleString('En-US', {month: 'short'});
+const expectedYear = date.getFullYear();
+const fullExpectedDate = `${expectedMonth} ${expectedDay}, ${expectedYear}`;
+await expect('calendarTextFieldSelector').toHaveValue(fullExpectedDate);
+
+const expectedMonthFull = await date.toLocaleString('En-US, {month: 'long'}); //we get full name of the current month.
+const expectedMonthAndYear = `${expectedMonthFull} ${expectedYear}`;
+let currentMonthAndYear = page.locator('nb-calendar-view-mode').textContent(); // get month and year as they are displayed in date picker.
+
+while(!currentMonthAndYear.ingludes(expectedMonthAndYear)) {
+    await page.locator('button[class=next-month]').click();
+    currentMonthAndYear = page.locator('nb-calendar-view-mode').textContent();
+}
+await expect('calendarTextFieldSelector').toHaveValue(fullExpectedDate);
+
