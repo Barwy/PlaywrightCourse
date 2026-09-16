@@ -1,0 +1,37 @@
+When position of slider changes, values of two attributes changes (cx and cy).
+To move slider to the desired position it should be enough to change their values.
+const tempSlider = page.locator('locator');
+await page.tempSlider.evaluate( element => {
+    element.setAttributeMethod('cx', '232.632') //we provide attribute name and its value;
+    element.setAttributeMethod('cy', '232.632')
+})
+await tempSlider.click(); //Any action is needed for the slider animation to complete.
+
+//Approach #2 - imitating mouse movement:
+1. Find element covering space where mouse movement will be taking place, so we do not move it all over the screen.
+const tempSliderBox = page.locator('locator');
+
+2. Before we start moving the mouse we need to ensure the space over which we will be moving the mouse is within our veiwport.
+We can do this with scrollIntoViewIfNeeded();
+await tempSliderBox.scrollIntoViewIfNeeded();
+
+3. We define the bounding box:
+const box = await tempSliderBox.boundingBox();
+
+Bounding box create a space with x (top border) and y (left border) axis. 
+The point where they meet i x = 0 and y = 0. This is the starting position of the mouse.
+Positive numbers represent position within the box and negative ones will move is outside of it.
+When doing this, we need to stay within the browser window.
+
+4. We move the mouse within the box:
+const box = await tempSliderBox.boundingBox();
+const x = box?.x + box?.width / 2;
+const y = box?.y + box?.height / 2;
+await page.mouse.move(x, y); //move coursor to this position within the bounding box.
+await page.mouse.down(); //left-click and hold.
+await page.mouse.move(x + 100, y); //move the mouse with button held to a new position (right).
+await page.mouse.move(x + 100, y + 100); //move the mouse with button held to a new position (down).
+await page.mouse.up() //release the mouse button.
+
+5. We validate the result
+await expect(tempSliderBox).toContainText('30');
