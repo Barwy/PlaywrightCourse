@@ -1,0 +1,12 @@
+On some pages we can move elements within page - drag them from one place and drop in another.
+To do this we point to the element we want to drag, use a special method .dragTo()
+and point to the element where we want to drop our dragged element.
+
+await page.getByText('Drag Me').dragTo(page.locator(page.getByText('Drop Here!')));
+
+The above solution does not always work, but there is another method:
+
+await page.getByText('Drag Me').hover(); //hover over the element.
+await page.muose.down(); //cilck the element.
+await page.locator(page.getByText('Drop Here!')).hover(); //moves the element to another selector.
+await page.mouse.up(); //release mouse button.

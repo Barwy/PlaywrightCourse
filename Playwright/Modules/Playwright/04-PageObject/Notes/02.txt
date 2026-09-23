@@ -1,0 +1,20 @@
+Creating a new Page Object file:
+1. Create class and provide its name.
+Class name should always start with a capital letter.
+
+2. Create a constructor.
+It is a block of code that is executed when class is initialized, or a new instance of it is created.
+Among others, it will be passing 'page' fixture into the class, so the same instance of page is used
+and all operations are performed in it.
+
+3. We import Page
+In one of the first lines we write: 
+import {Page} from '@playwright/test';
+to import the Page.
+
+4. We provide parameters for the constructor.
+We write:
+page: Page
+This is typescript for property (page) and its type (Page).
+
+

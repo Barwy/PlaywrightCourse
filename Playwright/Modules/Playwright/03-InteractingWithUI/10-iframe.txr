@@ -1,0 +1,9 @@
+Some elements are withing iframe tag.
+It is a webpage within another webpage.
+To interact with element that is within iframe, we need to switch frames first.
+To this:
+1. We create a constant with element that is the iframe we want to enter:
+const iframeLocator = page.frameLocator('iframeLocator');
+
+2. We combine the iframe locator with our target element:
+await iframeLocator.getByRole('button', {name, 'Click Me'}).click();

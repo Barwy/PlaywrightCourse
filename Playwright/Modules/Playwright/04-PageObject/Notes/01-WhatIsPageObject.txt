@@ -1,0 +1,17 @@
+It is a design pattern that helps organize code and makes it easier to maintain and reuse.
+According to it each page should have its own class with methods or functions for performing operations on it.
+
+There is no indeustry-wide standard for it.
+
+It is supported by the following coding principles:
+KiSS - keep it simple, stupid - keep your code short and simple.
+DRY - Don't repeat yourself - reuse code as much as possible.
+
+Naming methods
+Name your methods or functions according to what they do, so the code reads like a novel in simple English.
+Avoid tiny methods - related steps should be grouped into reasonable actions.
+
+Sometimes page elements should have their own class event if they are not a separate page.
+For example elements (like menus and buttons) that are available from all places on a page.
+
+Usually we keep our page objects in separate folder inside a project.
