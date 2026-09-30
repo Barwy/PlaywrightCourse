@@ -1,0 +1,3 @@
+Sometimes PW acts so fast that it causes issues and additional logic needs to be applied to remedy that.
+
+We use private metods for logic that should not be used outside the class it is in.

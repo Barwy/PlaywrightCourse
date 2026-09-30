@@ -1,0 +1,6 @@
+The default page object suggested by Playwright prevents locators from being duplicated inside page object.
+We create fields in class body and assign values to them in the constructor.
+The downside of the default solution is that in the real-life project we may have a lot
+of fields and values, which may render the class difficult to read and maintain.
+
+The solution to this problem is adding locators straight to metods.
