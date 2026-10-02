@@ -1,0 +1,6 @@
+Regular logs may not be very helpful when trying to solve issues.
+To solve this, we can add decorators helper method and add adnotation to our test methods.
+The decorator to add is @step.
+
+We also have to import that method to our page object classes so other methods use it:
+import { step } from '../helpers/testStepDecorator';

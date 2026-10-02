@@ -1,6 +1,7 @@
 //Parameterized Page Object Model
 
 import { Page } from '@playwright/test';
+import { step } from './helpers/testStepDecorator';
 
 export class FormLayoutsPage {
     private readonly page: Page;
@@ -9,6 +10,7 @@ export class FormLayoutsPage {
         this.page = page;
     }
 
+    @step
     async submitUsingTheGridForm(email: string, password: string, optionText: string) {
         const usingTheGridForm = this.page.locator('nb-card', { hasText: 'Using the Grid' });
         await usingTheGridForm.getByRole('textbox', { name: 'Email' }).fill(email);
@@ -24,13 +26,14 @@ export class FormLayoutsPage {
      * @param email - The email address to be filled in the form.
      * @param rememberMeCheck  - A boolean indicating whether to check the "Remember me" checkbox.
      */
+    @step
     async submitUsingInlineForm(fullName: string, email: string, rememberMeCheck: boolean) {
-         const inlineForm = this.page.locator('nb-card', { hasText: 'Inline form' });
-         await inlineForm.getByRole('textbox', { name: 'Jane Doe' }).fill(fullName);
-         await inlineForm.getByRole('textbox', { name: 'Email' }).fill(email);
+        const inlineForm = this.page.locator('nb-card', { hasText: 'Inline form' });
+        await inlineForm.getByRole('textbox', { name: 'Jane Doe' }).fill(fullName);
+        await inlineForm.getByRole('textbox', { name: 'Email' }).fill(email);
         if (rememberMeCheck) {
             await inlineForm.getByRole('checkbox').check({ force: true });
         }
         await inlineForm.getByRole('button', { name: 'Submit' }).click();
-}
+    }
 }

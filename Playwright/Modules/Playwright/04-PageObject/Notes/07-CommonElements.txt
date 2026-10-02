@@ -1,0 +1,22 @@
+Somethimes elements are shared among many pages and do not belong
+to any specific one.
+These pages are usually called helper or base pages.
+
+To allow page object pages access to the HelperBase class, we extend page object classes with it
+and modify their constructors:
+
+export class DatePicker extends HelperBase {
+    constructor(page: Page) {
+        super(page);
+    }
+
+All classes within the HelperBase should be protected rather than private.
+Protected means that those classes will be visible only to the classes that are extending them.
+
+This allows us to call any methods from the HelperBase in page object classes that extend them
+but not anywhere else. Example:
+
+await this.getPopUpMessage();
+
+We have to watch out not to include everything in the HelperBase class.
+

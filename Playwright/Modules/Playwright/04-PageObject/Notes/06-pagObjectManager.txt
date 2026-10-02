@@ -1,0 +1,5 @@
+Page object manager saves us from having to create the instance of a page for each test and add imports for each page.
+We add all imports that we use in our tests to the manager file.
+
+Playwright methods are light-weight enough not to cause performance issues when a bunch of them
+is initialized at the same time in the manager.
