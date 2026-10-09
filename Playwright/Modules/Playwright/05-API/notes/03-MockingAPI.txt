@@ -1,0 +1,49 @@
+To mock endpoints:
+1. Discover end point resposinble for the element we want to mock:
+- inspect the element;
+- go to network -> click Fetch/XHR to see only api requests;
+- refresh the page -> open the Response tab on the right side of list of api calls made;
+- check requests made by the app;
+
+2. In the framework we need to create the mock before we go to our app
+and the endpoints are called:
+await page.route('address of our API', async route => { //route can be any name we want;
+const tags = {              //we create object we will use as our mock;
+    "tags": [
+        "Test",
+        "Blog",
+        "Git",
+        "YouTube",
+        "Coding",
+        "Value-Focused",
+        "Bondar Academy",
+        "GitHub",
+        "Slack",
+        "Zoom"
+    ]
+}
+await route.fulfill ({
+            body: JSON.stringify(tags) //we use body: when the object we want to send is a string (stringification);
+            json: tags
+        })
+}) 
+
+- it is a good practice to copy and pasete the real response and then modify it.
+
+3. Change in tags may not be visible if project is very small and test completes too soon.
+Playwright disconnects before the server has a chance to do anything.
+When using mocking, we have to validate the expected result to make PW wait for our change:
+    await expect(page.locator('.sidebar .tag.pill')).toContainText(['Test', 'Test 2', 'AnotherTest']);
+.toContainText() can take either one argument or an array of them.
+
+When creating URLs for APIs, we can use the so called wildcards to make the address more resilient agains changes:
+Before: https://conduit-api.bondaracademy.com/api/tags
+After: */**/api/tags
+
+We can also store our test data in a json object rather than in a variable.
+We create a separate folder for test files, import their contents and use them during our tests.
+
+import tags from '../Modules/Playwright/05-API/testData/tags.json'
+await route.fulfill ({
+            json: tags //this takes contents of the tags.json file;
+        })

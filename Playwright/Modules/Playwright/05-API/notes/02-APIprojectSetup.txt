@@ -1,0 +1,10 @@
+We will be testing APIs on: 
+https://conduit.bondaracademy.com/
+
+To set up the project:
+1. register with fake details on the page;
+2. save the details;
+3. download and install postman;
+
+In postman:
+open a new tab;

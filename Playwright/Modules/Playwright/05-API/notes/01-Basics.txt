@@ -1,0 +1,69 @@
+API - application programming interface
+In fact, it is application communication interface.
+This is how clients and servers communicate.
+
+Every API has a URI (Uniform Resource Identifier)
+or URL (Uniform Resource Locator)
+
+When a resource is needed from a server, a request is sent and a response comes.
+API and Web URL are not interchangable. API url cannot be pasted into browser address bar.
+
+COMPONENTS OF API URLS
+https://example.com/api/articles?limit=100&offset=0
+https - protocol
+example.com - domain
+api/articles - path
+?limit=100&offset=0 - query parameters
+
+Query parameters are present after ?
+They come in pairs of keys and values. There is no limit to how many of them there can be.
+They are separated by &
+
+https://example.com/api - API base url (constant)
+articles - path resource endpoint (variable)
+?limit=100&offset=0 - query parameters
+
+There are four main API request methods.
+Together they make up an acronyme CRUD (Create, Read, Update, Delete)
+that describes their functionalities:
+POST - create a new method on the server;
+GET - read existing record from the server;
+PUT - update the existing record;
+DELETE - delete the existing record;
+
+POST
+post requests must contain the URL,
+it may have headers, that include types of the data that is being publushed
+compatibility type (i.e. application.json)
+authorization token.
+
+Request body of a post request that takes the form of a json object with 
+key and value pairs. Thwy are the information of what is to be posted.
+
+After receiving a request, the server sends a resonpse that contains the following items:
+Status code;
+Optionally, there can also be a respnse body.
+
+Status code groups:
+200 - success, server managed to process our request.
+400 - problem with the reuqest, something was wrong with it.
+500 - problem with the server.
+
+PLAYWRIGHT TESTS AND API
+1. Actions performed with playwright trigger actions in webapplications and those
+send requests to the server.
+2. Server sends back a response that makes something happen on the webpage and the change can
+then be verified by playwright.
+This happens over and over again throughout testing.
+
+Such tests can be slow and flaky.
+To avoid this, we can do Playwright mocking:
+PW interacts with a web application, it sends a request to the server that is intercepted by 
+PW mock that provides a response of our choosing to the webApp.
+The downside is that we are no longer testing end-to-end, but only the webApp.
+It is not ideal, but useful for some scenarios.
+
+PW can also interact directly with the server omitting the brwoser.
+Send requests and validate responses.
+Eliminating the browser makes the testing faster and more reliable.
+
