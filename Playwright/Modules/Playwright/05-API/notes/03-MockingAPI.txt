@@ -40,6 +40,11 @@ When creating URLs for APIs, we can use the so called wildcards to make the addr
 Before: https://conduit-api.bondaracademy.com/api/tags
 After: */**/api/tags
 
+Parameters of the url can also be replaced with wildcards if we do not care about them much:
+*/**/api/articles*
+
+
+
 We can also store our test data in a json object rather than in a variable.
 We create a separate folder for test files, import their contents and use them during our tests.
 

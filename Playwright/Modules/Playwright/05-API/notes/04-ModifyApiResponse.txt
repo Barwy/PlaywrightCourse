@@ -1,0 +1,36 @@
+We can catch api response incoming from the server and modify it.
+To do that, we have to:
+- find the url of the response we want to modify.
+- interception must happen before we opent the page making the call.
+
+We catch full server response and store it in a variable:
+await page.route('*/**/api/articles*', async route => {
+    const response = await route.fetch();
+});
+
+We save the response to JSON object:
+await page.route('*/**/api/articles*', async route => {
+    const response = await route.fetch();
+    const responseJSON = response.json();
+});
+
+All we have to do now is modify/override the response we are storing as a json file:
+await page.route('*/**/api/articles*', async route => {
+    const response = await route.fetch();
+    const responseJSON = await response.json();
+    responseJSON.articles[0].title = 'This is a mock article title!';
+    responseJSON.articles[0].description = 'This is a mock article description!';
+    await route.fulfill({
+        json: responseJSON
+    })
+});
+
+Finally, we add validation to the test:
+await expect(page.locator('.preview-link h1').first()).toContainText('This is a mock article title!');
+await expect(page.locator('.preview-link p').first()).toContainText('This is a mock article description!');
+
+This is useful when we want to force a certain response.
+This tests full integration as a call to the server is still being made.
+
+If we skip validation, the change will not be displayed in the browser and the test will fail.
+

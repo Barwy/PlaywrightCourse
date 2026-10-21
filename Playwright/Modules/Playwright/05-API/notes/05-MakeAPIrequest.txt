@@ -1,0 +1,35 @@
+To speed up our testing we can use api calls to speed up the testing process.
+We need to go to the network tab and perform the action we want to mock with API.
+Afterwards we check the calls that were made to find the one that intersts us.
+It is most likely the POST one.
+
+If the action we want to perform requires being logged in, we need to find the 
+token that is used to authorize us (Authorization section).
+We can obtain the login token by finding the login call made when we log into the system.
+
+The whole process requires 2 calls:
+1. login to obtain the token.
+2. use the token to make the call that will generate our test data.
+
+Before using PW to perform complicated API operations, it is a good idea to
+first test them with Postman.
+
+Login call:
+In Postman we paste the request address and select the correct call type (POST).
+Then we fill the body with Payload from the browser.
+Finally, we make the call.
+
+Post an article call:
+Perform all the steps necessary to make a successful call.
+Copy the call url and paste it to postman.
+Copy the call payload and paste it to Postman.
+
+Authorization in Postman:
+In postman go to headers.
+In browser - headers check the key-value pair for Authorization.
+In the example it should be Authorization and Token repspectively,
+then space and token value.
+We paste all this into postman in Headers section.
+
+Now we need to replicate this in PW.
+We need to ALWAYS remember about validating status code of the response.
