@@ -1,0 +1,38 @@
+In PW it is possible to authenticate once only and remain authenticated.
+It is all described in PW documentation:
+playwright.dev/docs/auth
+
+1. we need to create a playwright/.auth folder in root of the project and add it to .gitIgnore.
+    Data in this folder is sensitive as it will contain login data.
+
+2. we have to create auth.setup.ts file in tests folder.
+    starting contents of this file can be found on pW documentation page.
+    They need to be adjusted to match out test steps.
+
+3. configure a new project setup in playwright.config.ts
+    open the file and find the projects section and add:
+    { name: 'setup', testMatch: /.*\.setup\.ts/ },
+    this should be the first project.
+    When we call this project, the setup.ts flie should be executed.
+    In PW a project is not just a browser.
+
+    We also need to add path for storageState and dependencies into the use block:
+    {
+    use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'playwright/.auth/user.json',
+      },
+      dependencies: ['setup'],
+    },
+    storageState will make chromium use / attach the storage state that is saved in the user.json file.
+    When we use chromium, seteup project from dependencies will be executed first.
+
+4. In our test we no longer need steps to log in. All tests will be now performing log in steps.
+    Now, when executing tests, chrome will first log in to create the file with login data
+    and then the tests will be performed with the file. They will already be in the logged in state.
+
+The advantage of this solution is that PW figures out by itself what data is needed to authenticate.
+
+
+
+

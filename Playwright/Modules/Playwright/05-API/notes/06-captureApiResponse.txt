@@ -1,0 +1,19 @@
+We ofthen have to clean up after our tests so the the data we created that is not needed any more
+is removed and will not interfere with our work in the future.
+
+Sometimes it can be automated with clicking and sometimes API can be used for that.
+
+In our example we will try to delete an article with api.
+Each article has a unique id stored received in api call:
+Response -> slug () we need the value of the slug tag.
+
+await page.waitForResponse() 
+This not only wait for the api call to take place but also collects all of its data and we can use it.
+
+GET and DELETE requests do not have a request body.
+POST and PUT requests usually do have a request body.
+
+We can read elements of API response this way:
+const createArticleResponse = await page.waitForResponse('https://conduit-api.bondaracademy.com/api/articles/'); //Call address. Must be defined right after the call is made.
+    const createArticleResponseJSON = await createArticleResponse.json(); //Assign result of the call to const.
+    const slugID = createArticleResponseJSON.article.slug; //point to particular call argument to get its value.
