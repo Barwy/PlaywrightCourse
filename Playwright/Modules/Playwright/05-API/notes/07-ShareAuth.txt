@@ -33,6 +33,21 @@ playwright.dev/docs/auth
 
 The advantage of this solution is that PW figures out by itself what data is needed to authenticate.
 
+If we look into the user.json file, we will see that our session is being authorized with the jwtToken.
+Value of the token can be updated each time it changes so it remains valid longer.
+We will no longer have to run the auth.setoup.ts to update the token each time we run our tests.
+
+The problem with this solution is that this file is ignored by git. Also, api call will not create this file for us.
+We need to create a logic that will updated and use this file when it is available, otherwiser use another way of authenticating:
+
+We need to import another library:
+    import fs from 'fs' - it allows us to read and write files comaptible with nodeJS.
+    We add it to the auth.setup.ts file.
+
+With this solution, file will be created when it is missing and if it is present, we will be automatically logged into the browser.
+This can save some time with heavy tests.
+
+
 
 
 

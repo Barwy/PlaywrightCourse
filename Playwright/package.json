@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "po-test-chromium": "npx playwright test apiTests.spec.ts --project=chromium",
+    "po-test-firefox": "npx playwright test apiTests.spec.ts --project=firefox",
+    "po-test-all": "npm run po-test-chromium && po-test-firefox"
+  },
   "keywords": [],
   "type": "commonjs",
   "devDependencies": {

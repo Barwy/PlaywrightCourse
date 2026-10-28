@@ -1,0 +1,20 @@
+PW tests can be ran through the commandline but they can be lengthy.
+They can be saved as npm scripts and executed in their shorter form.
+
+Example of an npx command:
+npx playwright test apiTests.spec.ts --project=chromium
+
+Instead of typing it every time, we:
+1. go to package.json file and find "scripts": section and add a script there:
+"script": {
+    "po-test-chromium": "npx playwright test apiTests.spec.ts --project=chromium", //script name and command.
+    "po-test-firefox": "npx playwright test apiTests.spec.ts --project=firefox" //script 
+}
+
+we call the script by typing:
+npm run po-test-chromium
+
+we can also call npm script within npm script:
+"po-test-all": "npm run po-test-chromium && po-test-firefox" //we use && for chaining scripts.
+
+This gives us a lot of possibilities as far as running different scripts is concerned.
