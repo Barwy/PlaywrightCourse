@@ -1,0 +1,35 @@
+Tests are executed on 'workers.'
+When a test fails, PW shuts down the worker and runs another test on a new worker.
+
+with retest on, when a test fails, a new worker is dispatched and the failed test is
+executed again on a new instance of a worker.
+
+In playwright.config.ts:
+there is a line for retries. By default it looks like this:
+retries: process.env.CI ? 2 : 0,
+This means it will make 2 retries if thests are ran in Continuous Integration evnronment, like git or on pipelines.
+
+To make it work locally, all we have to do is change it to for example:
+retries: process.env.CI ? 2 : 3,
+Now there will be 2 retries in CI and 3 in other circumstances.
+
+RETRIES WORK ONLY WHEN RAN FROM COMMAND LINE.
+
+Retries can be confugured only for particular tests within the test file:
+In the test.describe.only():
+
+test.describe.only('Form Layouts Page', () => {
+    test.describe.configure({retries: 2})
+
+    test.beforeEach(async ({ page }) => {
+        await page.goto('https://playground.bondaracademy.com/');
+    });
+})
+
+We can also modify test itself before any steps are performed to clean up any junk from earlier run of the test:
+if(test.retry) {
+//clean test data;
+}
+Test code...
+
+

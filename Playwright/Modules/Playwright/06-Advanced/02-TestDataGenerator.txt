@@ -1,0 +1,4 @@
+We can use Faker.js libraty to generate random test data.
+
+It can be installed with the following command:
+npm install @faker-js/faker --save-dev
