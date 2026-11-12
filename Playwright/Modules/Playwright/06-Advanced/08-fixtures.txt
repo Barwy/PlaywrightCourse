@@ -1,0 +1,81 @@
+A fixture in Playwright is a reusable piece of setup that provides a test with what it needs, then can clean it up afterward.
+It creates a precondition for a test, or does a teardown after it.
+It is similar to before and after hooks.
+
+Summary:
+1. We import test under a different name to a fixture file;
+2. We modify it in the file;
+3. We export it to our test with the same name (test);
+
+USAGE:
+When using page objct model, we called a page manager. We did it for every test, which is suboptimal if we have multiple tests.
+*Create a file of any name with a .ts extension.
+*In the file we import the test: import {test} from '@playwright/test'
+^We modify it with as: import {test as base} from '@playwright/test'
+*We call our function (here it is called base) with .extend where we create our custom fixtures:
+    now test will redognise the additional methods. This is a JS object with key-value pairs.
+base.extend({
+
+})
+
+we give our fixture a name (pon in this example)
+base.extend({
+pom: async() => {
+
+}
+})
+
+Code within pom is our fixture.
+async inside our pom requires 2 arguments:
+*object (it can be empty): {} 
+*use function: use
+    it is a special function in PW, that holds different test options;
+    it has to be a part of every fixture;
+    it should be in the miidle of the fixture;
+    everything we put before the 'use', will be executed before the test;
+    everything we put after the 'use', will be executed after the test completion;
+
+---------------------------
+import {test as base} from '@playwright/test'
+import { PageManager } from '../Modules/Playwright/04-PageObject/Code/pageManager'
+
+type FixtureTypes = {
+    pom: PageManager;
+}
+
+base.extend<FixtureTypes>({
+    pom: async({page}, use) => {
+        await page.goto('/');
+        const manager = new PageManager(page);
+        await use(manager);
+    }
+})
+
+*We use manage as an argument of use, so it will be used whenever pom is called during the test execution.
+
+To use our fixture, we need to change it to a constant and export it:
+
+export const test = base.extend<FixtureTypes>({
+    pom: async({page}, use) => {
+        await page.goto('/');
+        const manager = new PageManager(page);
+        await use(manager);
+    }
+})
+
+Now we improt it in our test. The test file will look something like this:
+import { test } from '../fixture'
+
+test('Test name', async({pom}) => {
+    test body, for example
+    await pom.navigateTo.formLayoutsPage();
+    )}
+
+As said at the start, we no longer have to import page manager to every test.
+
+The advantage of using fixtures is that the teardown step is still executed even if the test fails.
+If tests pass but the method used during the teardown step fails, the test results are not impacted in any way.
+
+Fixtures should not be overused, there should NOT be too many of them, only for:
+*Test setup
+*Test cleanup

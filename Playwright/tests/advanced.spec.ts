@@ -32,7 +32,7 @@ test('Parametrized page object methods', async ({ page }) => {
     const formLayoutsPage = new FormLayoutsPage(page);
     const datePicker = new DatePicker(page);
     await navigateTo.formLayoutsPage();
-    await formLayoutsPage.submitUsingTheGridForm('test@example.com', 'password123', 'Option 1');
+    await formLayoutsPage.submitUsingTheGridForm(process.env.TEST_USER_EMAIL!, process.env.PASWWORD!, 'Option 1'); //! <- tells typecscript taht the value is not undefined.
     await formLayoutsPage.submitUsingInlineForm('John Doe', 'johnd@example.com', false);
     await navigateTo.datePickerPage();
     await datePicker.selectCommonDatePickerDateFromToday(5);

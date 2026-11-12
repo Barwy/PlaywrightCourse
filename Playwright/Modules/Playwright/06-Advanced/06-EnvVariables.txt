@@ -1,0 +1,52 @@
+Environment variables are variables that differ between environments.
+
+Urls for different environments are stored in the playwright.config.ts file, in the baseURL setting:
+baseURL: 'https://dotestshere.com',
+
+in the tests we can replace addresses to / in all instances of goTo across out tests:
+await page.goTo('/');
+
+Environment variables are mostly created for CI/CD execution.
+
+* If we test across multiple environments with different urls, we need to create and configure an environment variables file.
+First of all we need to go to the playwright.config.ts file, uncomment and modify the following lines:
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
+
+* To use all of it we need to install the following package:
+npm install dotenv --save-dev
+
+* In the root of the project we create files like these (one for each test environmet):
+.env
+.env.qa
+
+* Configure urls for the environment in each file:
+URL=https://dotestshere.com;
+
+* Configure baseURL in the playwright.config.ts file:
+baseURL: process.env.URL,
+
+* We modify the following line of the same file:
+dotenv.config({ path: path.resolve(__dirname, process.env.TEST_ENV ? '.env${process.env.TEST_ENV}' : '.env') });
+If this env variable is not provided: process.env.TEST_ENV, .env file will is to be used.
+
+* In package.json we need to configure the TEST_ENV:
+in the "scripts" section we add a command to run our tests on a particular environment:
+"po-test-chromium:qa": "TEST_ENV=qa npx playwright test test-file-name.spec.ts --project==chromium",
+When we call this script now, it will call the right file with url to execute tests.
+We run the script with: "npm run scriptName" in the console
+
+To change the file and environment, we run:
+npm run scriptName:qa - this should run the .env.qa file.
+
+*Now we can add separate parameters for each environment.
+
+*.env files should be added to gitignore and never stored on git as they contain sensitive data.
+    Environment data can be overridden in command line:
+    $env:TERT_USER_EMAIL=test_2@example.com npx playwright test //for windowns
+This will not work if we run tests with green arrows - the default .env file will be used then.
+
+
+
+

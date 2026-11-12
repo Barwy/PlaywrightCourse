@@ -1,0 +1,29 @@
+playwright.config.ts file contains numerous options that can be configured.
+
+To make it easier to read, we remove things we don't veed, like some comments.
+We can also remove settings that we are going to leave with their default values.
+
+In 'use' block we keep:
+* baseURL,
+* trace
+* video
+
+In 'project' we keep all the browsers.
+
+The file structure can be split into global and projects configureation. 
+They both have 2 sections:
+*main section - which is global
+*uses section
+
+If we add a 'timeout' setting to chromium and change its value to a non-default one, it will be used.
+Almost every config that is present in the global section, can be added to projects sention and modified.
+
+To see all available options, we have to go to the documentation and find:
+*Configuration - for global options and their uses;
+*Configuration (use) - for options that can be used in the "use" block (in both global and projects blocks);
+
+We can have multipke configuration files for example to use in different environments.
+To launch tests with a non-default config file, we use ine the console:
+npx playwright test --config=our.nondefauult.config.file.ts
+
+

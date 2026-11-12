@@ -1,0 +1,21 @@
+Playwright has taking screenshots and recording videos built in.
+
+In playwright.config.ts file we can find the setting:
+traces: 'on-first-retry'
+
+Using trace is the best way to figure out what went wrong with the test.
+To capture a screenshot we call:
+await. page.screenshot({path: 'path/to/where/to/save/it.png'});
+
+We can store a screenshot as a stream of data to use elsewhere, for example print to console:
+const screenshotTaken = await page.screenshot();
+console.log(screenshotTaken.toString('base64'));
+
+It is also possible to take screenshots of particular elements of a page:
+await page.locator('nb-card', {hasText: "Inline form"}).screenshot({path: 'screenshot/path/fileName.png'});
+
+To enable videos, we go to the playwright.config.ts file and update the trace section:
+trace: 'in-first-rety',
+video: '',
+There are a number of options to choose from when enabling it.
+Videos are recorded only when testr are ran through the command line.

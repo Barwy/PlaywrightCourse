@@ -1,0 +1,17 @@
+Parallel execution is configured in playwright.config.ts in section:
+fullyParallel:
+by default it is enabled and set to "true,"
+
+One worker is dispatched per parallel thread.
+Number of workers is defined in the following setting:
+workers: process.env.CI ? 1 : undefined,
+undefined here means that PW will decide itself how many workers are to be used.
+Max number is defined by half of max number of cores of CPU.
+
+To deisable the parallel execution we can change the max number of workers from undefined
+in the workers: to 1.
+As a result, all tests will be executed one by one.
+
+Downsides of fully parallel tests:
+1. Test environment may not be powerful enough to handle it.
+2. If tests are sharing test data, it may be result in false fails due to conflicts.
